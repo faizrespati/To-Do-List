@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>To-Do List</title>
+    <link rel="stylesheet" type="text/css" href="/card.css">
+  </head>
+  <body>
+<div class="container">
+    <h1>To-Do List</h1>
+
+    <form action="/add" method="POST">
+      <label for="task_name">Task Name:</label>
+      <input type="text" id="task_name" name="task_name" required>
+
+      <label for="due_date">Due Date:</label>
+      <input type="date" id="due_date" name="due_date" required>
+
+      <button type="submit">Add Task</button>
+    </form>
+
+    <ul>
+        <% tasks.forEach((task) => { %>
+          <li>
+            <%= task.task_name %> - <%= task.due_date %>
+            <% if (task.status === 'pending') { %>
+              <form action="/update/<%= task.id %>" method="POST" style="display: inline;">
+                <input type="hidden" name="status" value="completed">
+                <button type="submit">Mark as Completed</button>
+              </form>
+            <% } else { %>
+              <span style="color: green;">Completed</span>
+            <% } %>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+  </body>
+</html>
